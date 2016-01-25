@@ -67,7 +67,82 @@ names(x) <- c("foo","bar","norf")
 x <- list(a=1,b=2,c=3)
 names(x) # will be a b and c accordingly
 
+## Reading Data
+# One of the most commonly use function:
+read.table(file = ,header = TRUE, ..) # lots of arguments 
+# read.csv is identical to read.talbe except that the default seperator is a comma
+read.csv() # most commmonly format
+# Reading large table
+help("read.table") # read carefully
+# R use RAM, make sure your computer has enough (pre-calculate)
+# initialize is useful for reading large data sets (what class of cols, how many rows)
 
+# Textual Formats
+dump()
+dput()
+# contains meta data, so that another user doesn't have to specify it all over again
+# The only downside is that the format is not very space-efficient
 
+# Connections to the outside world
+con <- file("foo.txt","r")
+data <- read.csv(con)
+close(con)
+# is the same as read.csv("foo.txt)
+# However, it's useful for reading lines of a text file
+con <- gzfile("words.gz")
+x <- readLines(con, 10)
 
+# Read from webpage
+con <- url("http://www.google.com", "r")
+x <- readLines(con)
+head(x)
+
+# Subsetting Objects in R
+# - [ ] returns object of the same class as the original
+# - [[]] is used to extract elements of a list or a data frame. It can only be used to extract a single element on a list
+# - $ is used to extract elements of a list or data frame by "Name"
+# Note: R start counting from 1 
+x <- c("a","b","a","c","d")
+x[1] # will return "a
+x[x>"a"] # will return the logical vector
+
+# Subsetting Lists*
+x <- list(foo = 1:4, bar = 0.6)
+x[1] # a list that contains 1:4
+x[[1]] # a sequence 1 to 4
+x$bar
+# is equivalent to
+x[["bar"]]
+ 
+# Subsetting Matrix
+x <- matrix(1:6,2,3)
+x
+# to obtain the first row
+x[1,]
+x[,1] # first column
+x[1,2] # get number 3
+x[1,2,drop=FALSE] # preserve the class --> 1x1 matrix 
+# by default you don't get the sub matrix back: you get back elements
+
+# Removing Missing (NA) Values **
+# common operations in data analysis
+# create a logical vector: where missing element is
+bad <- is.na(x)
+x[!bad] # vector without missing value
+# for multiple sets:
+# we use complete.cases()
+good <- complete.cases(x,y)
+# you can also use complete.cases(matrix) or (dataframe) too!
+# this is a very handy function 
+
+# Vectorized Operations (like MATLAB) -- easier & cleaner!
+x <- 1:4
+y <- 6:9
+# these operations are element-wise
+x+y
+x>2
+x==3
+x*y
+x/y
+x %*% y ## for TRUE matrix multiplication (be careful of the dimension )
 
