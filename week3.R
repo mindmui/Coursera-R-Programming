@@ -48,4 +48,50 @@
     tapply(x,f,mean) # will take the mean for each group
     tapply(x,f,mean, simplify=FALSE) # by default it's true, FALSE will give you a list
     
+# split - takes a vector or other objects and splits it into groups determined by a factor.
+  # similar to tapply but without applying the function
+    str(split)
+  # example:
+    x <- c(rnorm(10),runif(10),rnorm(10,1))
+    f <- gl(3,10) # generate factor variables
+    split(x,f) # always return a list back
+      # and if you want to do something with this list, then you can use lapply or sapply
+      # split + lapply = tapply --> to make things more compact
+  # Splitting Data Frame: ** very useful
+    head(airquality)
+    s <- split(airquality, airquality$Month)
+      # split according to month 
+      # now we find the mean:
+       lapply(s,function(x) colMeans(x[, c("Ozone","Solar.R","Wind")], na.rm=TRUE))
+       # lapply will return the list
+      # what if we want to return a simplified result:
+       sapply(s,function(x) colMeans(x[, c("Ozone","Solar.R","Wind")], na.rm=TRUE))
+        # get the means of the observed values as a matrix (3 values for each month)
+
+# Debugging:
+  # figuring what's wrong when you know there is an error
+  # three main types of indications:
+       # message -- a generic notification; execution continues
+       # warning -- not necessary a fatal
+       # error -- a fatal problem has occrued; stop execution
+       # condition -- a generic concept for indicating that something unexpected can occur
+  # example:
+    # warning -- it's fine, execution occured
+        log(-1)
     
+# Tools in Debugging:
+  # Most basic one:
+    traceback() # prints out the function call stack after an error occurs
+      # give the most recent error, if there is no error, the function will not be worked!
+    debug() # "debug mode" allow you to step through a function line by line!
+      # debug(lm) # to declare the debug mode
+      # then when you call lm(y~x), it will be executed line by line
+    browser() # suspends the execution of a function
+    trace() # allows you to inster debugging code into a function a specific places
+      # useful when you're editing somebody's code
+    recover() # allows you to modify the error behaviour so that you can browse the function call stack
+  # tips:
+    print() 
+    cat()
+    # will also be useful for you
+  # Note: Debugging tools are not a substitute for thinking
