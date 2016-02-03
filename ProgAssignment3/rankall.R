@@ -1,8 +1,8 @@
 staterank <- function(substate, colnum, num) {
   # Get number of hospital with data
-  n <- dim(substate[!is.na(substate[,colnum]), ])[1]
+    n <- dim(substate[!is.na(substate[,colnum]), ])[1]
   # Get hospital names:
-  hosname <- substate[,2]
+    hosname <- substate[,2]
   # Handle special cases:
   if(num == "best") {
     rank <- 1
